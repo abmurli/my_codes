@@ -1,0 +1,12 @@
+- hosts: localhost
+  connection: local
+
+  vars:
+   ec2:
+    instance_ids:
+      - Ip1
+      - Ip2
+      - Ip3
+   num_hosts: "{{ ec2.instance_ids | length }}"
+  tasks:
+   - debug: var=num_hosts
