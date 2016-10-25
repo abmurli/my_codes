@@ -1,0 +1,89 @@
+"ec2": {
+        "changed": true,
+        "instance_ids": [
+            “i-xxxxxxxx”,
+            “i-xxxxxxxx”
+        ],
+        "instances": [
+            {
+                "ami_launch_index": "0",
+                "architecture": "x86_64",
+                "block_device_mapping": {
+                    "/dev/sda1": {
+                        "delete_on_termination": true,
+                        "status": "attached",
+                        "volume_id": "vol-xxxxxxx"
+                    }
+                },
+                "dns_name": "ec2-00-00-000-000.compute-1.amazonaws.com",
+                "ebs_optimized": false,
+                "groups": {
+                    "sg-xxxxxxx": "Security_group_name"
+                },
+                "hypervisor": "xen",
+                "id": "i-xxxxxxx",
+                "image_id": "ami-xxxxxxx",
+                "instance_type": "t2.micro",
+                "kernel": null,
+                "key_name": <key pair name>,
+                "launch_time": "2016-10-13T13:29:15.000Z",
+                "placement": "us-xxxx-1",
+                "private_dns_name": "ip-xx-x-x-x.ec2.internal",
+                "private_ip": "10.x.x.xx",
+                "public_dns_name": "ec2-xx-xx-xxx-xx.compute-1.amazonaws.com",
+                "public_ip": "xx.xx.xx.xx",
+                "ramdisk": null,
+                "region": "us-xxxx-1",
+                "root_device_name": "/dev/sda1",
+                "root_device_type": "ebs",
+                "state": "running",
+                "state_code": 16,
+                "tags": {
+                    "Name": "Ansible_test"
+                },
+                "tenancy": "default",
+                "virtualization_type": "hvm"
+            },
+            {
+                "ami_launch_index": "1",
+                "architecture": "x86_64",
+                "block_device_mapping": {
+                    "/dev/sda1": {
+                        "delete_on_termination": true,
+                        "status": "attached",
+                        "volume_id": "vol-xxxxxx"
+                    }
+                },
+                "dns_name": "ec2-xx-xx-xxx-xx.compute-1.amazonaws.com",
+                "ebs_optimized": false,
+                "groups": {
+                    "sg-xxxxxxxx": "security_group_name"
+                },
+                "hypervisor": "xen",
+                "id": "i-xxxxxxx",
+                "image_id": "ami-xxxxxxxx",
+                "instance_type": "t2.micro",
+                "kernel": null,
+                "key_name": "key_pair_name",
+                "launch_time": "2016-10-13T13:29:15.000Z",
+                "placement": "us-xxxx-1x",
+                "private_dns_name": "ip-xx-x-x-xx.ec2.internal",
+                "private_ip": "xx.x.x.xx",
+                "public_dns_name": "ec2-xx-xx-xx-xxx.compute-1.amazonaws.com",
+                "public_ip": "xx.xx.xx.xxx",
+                "ramdisk": null,
+                "region": "us-xxxx-x",
+                "root_device_name": "/dev/sda1",
+                "root_device_type": "ebs",
+                "state": "running",
+                "state_code": 16,
+                "tags": {
+                    "Name": "Ansible_test"
+                },
+                "tenancy": "default",
+                "virtualization_type": "hvm"
+            }
+        ],
+        "tagged_instances": []
+    }
+}
