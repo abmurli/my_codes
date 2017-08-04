@@ -1,0 +1,441 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS CloudFormation Template to create the Linux server
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Network Configuration
+        Parameters:
+          - VPCID
+          - SubnetID
+          - RemoteAccessCIDR
+      - Label:
+          default: KeyPair Configuration
+        Parameters:
+          - KeyPairName
+      - Label:
+          default: Volume Configuration
+        Parameters:
+          - RootVolumeSize
+          - Volume1
+          - MountPoint1
+          - Volume2
+          - MountPoint2
+          - Volume3
+          - MountPoint3
+          - Volume4
+          - MountPoint4
+          - Volume5
+          - MountPoint5
+          - Volume6
+          - MountPoint6
+          - Volume7
+          - MountPoint7
+          - Volume8
+          - MountPoint8
+          - Volume9
+          - MountPoint9
+          - Volume10
+          - MountPoint10
+          - Encrypted
+      - Label:
+          default: Server Configuration
+        Parameters:
+          - ServerName
+          - ServerInstanceType
+          - ServerAMI
+    ParameterLabels:
+      VPCID:
+        default: VPC ID
+      SubnetID:
+        default: Subnet  ID
+      RemoteAccessCIDR:
+        default: External Access CIDR
+      KeyPairName:
+        default: Key Pair Name
+      ServerName:
+        default: Server Name
+      ServerAMI:
+        default: Server AMI
+      ServerInstanceType:
+        default: Server InstanceType
+      RootVolumeSize:
+        default: Root volume size (GB)
+      Volume1:
+        default: Volume1 size (GB)
+      MountPoint1:
+        default: Mount Point 1
+      Volume2:
+        default: Volume2 size (GB)
+      MountPoint2:
+        default: Mount Point 2
+      Volume3:
+        default: Volume3 size (GB)
+      MountPoint3:
+        default: Mount Point 3
+      Volume4:
+        default: Volume4 size (GB)
+      MountPoint4:
+        default: Mount Point 4
+      Volume5:
+        default: Volume5 size (GB)
+      MountPoint5:
+        default: Mount Point 5
+      Volume6:
+        default: Volume6 size (GB)
+      MountPoint6:
+        default: Mount Point 6
+      Volume7:
+        default: Volume7 size (GB)
+      MountPoint7:
+        default: Mount Point 7
+      Volume8:
+        default: Volume8 size (GB)
+      MountPoint8:
+        default: Mount Point 8
+      Volume9:
+        default: Volume9 size (GB)
+      MountPoint9:
+        default: Mount Point 9
+      Volume10:
+        default: Volume10 size (GB)
+      MountPoint10:
+        default: Mount Point 10
+      Encrypted:
+        default: Encrypted
+Parameters:
+  VPCID:
+    Description: ID of the VPC (e.g., vpc-0343606e)
+    Type: String
+  SubnetID:
+    Description: ID of the subnet that you want to provision the Server (e.g., subnet-a0246dcd)
+    Type: String
+  RemoteAccessCIDR:
+    Description: Allowed CIDR block for external SSH access to the server
+    Type: String
+    AllowedPattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/([0-9]|[1-2][0-9]|3[0-2]))$"
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/x
+  KeyPairName:
+    Description: Key pair of the Server
+    Type: AWS::EC2::KeyPair::KeyName
+  ServerInstanceType:
+    Description: Amazon EC2 instance type for the server
+    Type: String
+    AllowedValues:
+      - t1.micro
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - m1.small
+      - m1.medium
+      - m1.large
+      - m1.xlarge
+      - m2.xlarge
+      - m2.2xlarge
+      - m2.4xlarge
+      - m3.medium
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+      - m4.10xlarge
+      - c1.medium
+      - c1.xlarge
+      - c3.large
+      - c3.xlarge
+      - c3.2xlarge
+      - c3.4xlarge
+      - c3.8xlarge
+      - c4.large
+      - c4.xlarge
+      - c4.2xlarge
+      - c4.4xlarge
+      - c4.8xlarge
+      - g2.2xlarge
+      - r3.large
+      - r3.xlarge
+      - r3.2xlarge
+      - r3.4xlarge
+      - r3.8xlarge
+      - i2.xlarge
+      - i2.2xlarge
+      - i2.4xlarge
+      - i2.8xlarge
+      - d2.xlarge
+      - d2.2xlarge
+      - d2.4xlarge
+      - d2.8xlarge
+      - hi1.4xlarge
+      - hs1.8xlarge
+      - cr1.8xlarge
+      - cc2.8xlarge
+      - cg1.4xlarge
+  ServerName:
+    Description: Name of the server
+    Type: String
+  ServerAMI:
+    Description: Amazon machine Image
+    Type: String
+  RootVolumeSize:
+    Description: Root volume size
+    Type: Number
+  Volume1:
+    Description: Volume1 size
+    Type: Number
+  MountPoint1:
+    Description: Volume1 size
+    Type: String
+  Volume2:
+    Description: Volume1 size
+    Type: Number
+  MountPoint2:
+    Description: Volume1 size
+    Type: String    
+  Volume3:
+    Description: Volume1 size
+    Type: Number    
+  MountPoint3:
+    Description: Volume1 size
+    Type: String    
+  Volume4:
+    Description: Volume1 size
+    Type: Number    
+  MountPoint4:
+    Description: Volume1 size
+    Type: String    
+  Volume5:
+    Description: Volume1 size
+    Type: Number    
+  MountPoint5:
+    Description: Volume1 size
+    Type: String    
+  Volume6:
+    Description: Volume1 size
+    Type: Number    
+  MountPoint6:
+    Description: Volume1 size
+    Type: String    
+  Volume7:
+    Description: Volume1 size
+    Type: Number    
+  MountPoint7:
+    Description: Volume1 size
+    Type: String    
+  Volume8:
+    Description: Volume1 size
+    Type: Number    
+  MountPoint8:
+    Description: Volume1 size
+    Type: String    
+  Volume9:
+    Description: Volume1 size
+    Type: Number    
+  MountPoint9:
+    Description: Volume1 size
+    Type: String    
+  Volume10:
+    Description: Volume1 size
+    Type: Number    
+  MountPoint10:
+    Description: Volume1 size
+    Type: String    
+  Encrypted:
+    Description: Encrypted volume
+    Type: String
+    AllowedValues:
+      - true
+      - false
+Resources:
+  SERVER:
+    Type: AWS::EC2::Instance
+    Metadata:
+      Comment: "Dynamically create volume"
+      "AWS::CloudFormation::Init":
+        config:
+          files:
+            /tmp/Dynamic_volume_creation.sh:
+              content:
+                Fn::Join:
+                  - ""
+                  -
+                    - "#!/usr/bin/env bash\n"
+                    - "#Arguments - 1) instance_id	2) availability_zone 3) volume1 4) volume2 5) volume3 6) volume4 7) volume5 8) volume6 9) volume7 # 10) volume8 11) volume9 12) volume10 13) mount_point1 14) mount_point2 15) mount_point3 16) mount_point4 17) mount_point5\n"
+                    - "# 18) mount_point6 19) mount_point7 20) mount_point8 21) mount_point9 22) mount_point10 23: encrypted 24: region\n"
+                    - "instance_id=\"${1}\"; availability_zone=\"${2}\";\n"
+                    - "declare -A volume_dict; declare -a volume_sorted_list;\n"
+                    - "volume_dict[\"xvdb\"]=\"${3}:${13}\"; volume_sorted_list+=( \"xvdb\" )\n"
+                    - "volume_dict[\"xvdc\"]=\"${4}:${14}\"; volume_sorted_list+=( \"xvdc\" )\n"
+                    - "volume_dict[\"xvdd\"]=\"${5}:${15}\"; volume_sorted_list+=( \"xvdd\" )\n"
+                    - "volume_dict[\"xvde\"]=\"${6}:${16}\"; volume_sorted_list+=( \"xvde\" )\n"
+                    - "volume_dict[\"xvdf\"]=\"${7}:${17}\"; volume_sorted_list+=( \"xvdf\" )\n"
+                    - "volume_dict[\"xvdg\"]=\"${8}:${18}\"; volume_sorted_list+=( \"xvdg\" )\n"
+                    - "volume_dict[\"xvdh\"]=\"${9}:${19}\"; volume_sorted_list+=( \"xvdh\" )\n"
+                    - "volume_dict[\"xvdi\"]=\"${10}:${20}\"; volume_sorted_list+=( \"xvdi\" )\n"
+                    - "volume_dict[\"xvdj\"]=\"${11}:${21}\"; volume_sorted_list+=( \"xvdj\" )\n"
+                    - "volume_dict[\"xvdk\"]=\"${12}:${22}\"; volume_sorted_list+=( \"xvdk\" )\n"
+                    - "for i in \"${!volume_sorted_list[@]}\"; do\n"
+                    - "echo \"${volume_sorted_list[$i]}: ${volume_dict[${volume_sorted_list[$i]}]}\"\n"
+                    - "volume_size=\"$(cut -d':' -f1 <<<\"${volume_dict[${volume_sorted_list[$i]}]}\")\"\n"
+                    - "mount_point=\"$(cut -d':' -f2 <<<\"${volume_dict[${volume_sorted_list[$i]}]}\")\"\n"
+                    - "if [ $volume_size -gt 0 ]; then\n"
+                    - "if [ -n \"$mount_point\" ]; then\n"
+                    - "if (\"${23}\" == \"true\"); then\n"
+                    - "/usr/local/bin/aws ec2 create-volume --size ${volume_size} --availability-zone "
+                    - "${availability_zone} --volume-type gp2 --encrypted --region ${24} > volume.json\n"
+                    - "sleep 25\n"
+                    - "volume_id=$(cat volume.json | jq -r '.VolumeId')\n"
+                    - "else\n"
+                    - "/usr/local/bin/aws ec2 create-volume --size ${volume_size} --availability-zone "
+                    - "${availability_zone} --volume-type gp2 --region ${24} > volume.json\n"
+                    - "sleep 25\n"
+                    - "volume_id=$(cat volume.json | jq -r '.VolumeId')\n"
+                    - "fi\n/usr/local/bin/aws ec2 attach-volume --device ${volume_sorted_list[$i]} --instance-id ${instance_id} "
+                    - "--volume-id ${volume_id} --region ${24}\n"
+                    - "sleep 20\n"
+                    - "sudo mkfs -t ext4 /dev/${volume_sorted_list[$i]}\n"
+                    - "sleep 10\n"
+                    - "if [ ! -d \"/${mount_point}\" ]; then\n"
+                    - "sudo mkdir /${mount_point}\nfi\n"
+                    - "sudo mount /dev/${volume_sorted_list[$i]} /${mount_point}/\n"
+                    - "sudo cp /etc/fstab /etc/fstab.bak\n"
+                    - "cat <<EOF >> /etc/fstab\n"
+                    - "/dev/${volume_sorted_list[$i]}	/${mount_point}	ext4	defaults,nofail\nEOF\n"
+                    - "else\necho mount point empty\nfi\nelse\necho volume not created as the size is 0\n"
+                    - "fi\nsleep 5\ndone"
+              mode: "000700"
+              owner: "root"
+              group: "root"
+    Properties:
+      ImageId:
+        Ref: ServerAMI
+      InstanceType:
+        Ref: ServerInstanceType
+      SubnetId:
+        Ref: SubnetID
+      SecurityGroupIds:
+        - Ref: ServerSecurityGroup
+      IamInstanceProfile:
+        Ref: Profile
+      Tags:
+        - Key: Name
+          Value:
+            Ref: ServerName
+      KeyName:
+          Ref: KeyPairName
+      UserData:
+        "Fn::Base64":
+          "Fn::Join":
+            - ""
+            -
+              - "#!/bin/bash\n"
+              - "yum -y update > /tmp/yum_update.log 2>&1\n"
+              - "sleep 180\n"
+              - "curl 'https://s3.amazonaws.com/aws-cli/awscli-bundle.zip' -o 'awscli-bundle.zip' "
+              - "> /tmp/curl_awscli.log 2>&1\n"
+              - "sleep 5\n"
+              - "yum -y install unzip > /tmp/unzip_install.log 2>&1\n"
+              - "sleep 5\n"
+              - "unzip awscli-bundle.zip > /tmp/unzip_awscli.log 2>&1\n"
+              - "sleep 5\n"
+              - "./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws\n"
+              - "sleep 5\n"
+              - "/usr/bin/easy_install --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz\n"
+              - "sleep 5\n"
+              - "yum -y install wget\n"
+              - "sleep 2\n"
+              - "wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64\n"
+              - "sleep 3\n"
+              - "chmod +x ./jq\n"
+              - "cp jq /usr/bin\n"
+              - "/opt/aws/bin/cfn-init --stack"
+              - " "
+              - Ref: AWS::StackName
+              - " "
+              - "--resource SERVER --region"
+              - " "
+              - Ref: AWS::Region
+              - " >  /tmp/cfn-init.log 2>&1"
+              - "\n"
+              - "instance_id=$(curl http://169.254.169.254/latest/meta-data/instance-id/)\n"
+              - "availablity_zone=$(curl -s 'http://169.254.169.254/latest/dynamic/instance-identity/document' | jq -r '.availabilityZone')\n"
+              - "cd /tmp\n"
+              - "./Dynamic_volume_creation.sh $instance_id $availablity_zone"
+              - " "
+              - Ref: Volume1
+              - " "
+              - Ref: Volume2
+              - " "
+              - Ref: Volume3
+              - " "
+              - Ref: Volume4
+              - " "
+              - Ref: Volume5
+              - " "
+              - Ref: Volume6
+              - " "
+              - Ref: Volume7
+              - " "
+              - Ref: Volume8
+              - " "
+              - Ref: Volume9
+              - " "
+              - Ref: Volume10
+              - " "
+              - Ref: MountPoint1
+              - " "
+              - Ref: MountPoint2
+              - " "
+              - Ref: MountPoint3
+              - " "
+              - Ref: MountPoint4
+              - " "
+              - Ref: MountPoint5
+              - " "
+              - Ref: MountPoint6
+              - " "
+              - Ref: MountPoint7
+              - " "
+              - Ref: MountPoint8
+              - " "
+              - Ref: MountPoint9
+              - " "
+              - Ref: MountPoint10
+              - " "
+              - Ref: Encrypted
+              - " "
+              - Ref: AWS::Region
+              - " >  /tmp/Dynamic_volume_creation.log 2>&1"
+      BlockDeviceMappings:
+          - DeviceName: "/dev/sda1"
+            Ebs:
+              VolumeType: "gp2"
+              DeleteOnTermination: "true"
+              VolumeSize:
+                Ref: RootVolumeSize
+  Profile:
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Path: "/"
+      Roles:
+        - test-role
+  ServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enables RDP Access
+      VpcId:
+        Ref: VPCID
+      SecurityGroupIngress:
+       - IpProtocol: 'tcp'
+         FromPort: '22'
+         ToPort: '22'
+         CidrIp:
+          Ref: RemoteAccessCIDR
+      SecurityGroupEgress:
+       - IpProtocol: 'tcp'
+         FromPort: '0'
+         ToPort: '65535'
+         CidrIp:
+          Ref: RemoteAccessCIDR
