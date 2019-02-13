@@ -1,0 +1,11 @@
+---
+- hosts: local
+  tasks:
+   - name: create an user DSPDINFIICS
+     user:
+       name: DSPINFIICS
+       comment: root user
+       uid: 10000
+       groups:
+         - wheel
+         - dmmgr
