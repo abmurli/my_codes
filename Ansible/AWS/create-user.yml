@@ -1,6 +1,10 @@
 ---
 - hosts: local
   tasks:
+   - name: Ensure group "dmmgr" exists
+     group:
+       name: dmmgr
+       state: present
    - name: create an user DSPDINFIICS
      user:
        name: DSPINFIICS
