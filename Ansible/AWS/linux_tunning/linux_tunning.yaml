@@ -1,0 +1,19 @@
+---
+- hosts: local
+  tasks:
+   - name: Modify the /etc/sysctl.conf file
+     copy:
+       src: templates/sysctl.conf
+       dest: /etc/sysctl.conf
+       owner: root
+       group: root
+       mode: 0644
+       backup: yes
+   - name: Modify the /etc/security/limits.conf file
+     copy:
+       src: templates/limits.conf
+       dest: /etc/security/limits.conf
+       owner: root
+       group: root
+       mode: 0644
+       backup: yes
