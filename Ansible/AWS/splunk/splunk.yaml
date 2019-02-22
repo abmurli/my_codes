@@ -1,0 +1,14 @@
+- hosts: all
+  become: true
+  vars:
+    SPLUNKHOME: /opt/splunk-forwarder
+  environment:
+    SPLUNKHOME: /opt/splunk-forwarder
+    DEPLOYSERV: xvlsplunkd2.sharedservices.aws.wellmark.compute
+  tasks:
+  - name: install splunk agent
+    shell: yum -y install splunkforwarder
+  - name: start the splunk service
+    shell: shell.sh
+    args:
+      chdir: {{ SPLUNKHOME }}
