@@ -4,7 +4,7 @@
     SPLUNKHOME: /opt/splunk-forwarder
   environment:
     SPLUNKHOME: /opt/splunk-forwarder
-    DEPLOYSERV: xvlsplunkd2.sharedservices.aws.wellmark.compute
+    DEPLOYSERV: 
   tasks:
   - name: install splunk agent
     shell: yum -y install splunkforwarder
