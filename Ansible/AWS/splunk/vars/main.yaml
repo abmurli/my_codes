@@ -1,0 +1,6 @@
+---
+SPLUNKHOME: /opt/splunkforwarder
+HOME: /etc/init.d/
+NEWPASS: ""
+OLDPASS: ""
+DEPLOYSERV: ""

@@ -1,0 +1,53 @@
+---
+- name: install splunk agent
+  yum:
+    name: splunkforwarder
+    state: present
+  register: splunkforwarder
+- name: Modify the /etc/init.d/splunkd file
+  copy:
+    src: splunkd
+    dest: /etc/init.d/splunkd
+    owner: root
+    group: root
+    mode: 0755
+    backup: yes
+  when: splunkforwarder|success
+- name: copy the deploymentclient.conf
+  copy:
+    src: deploymentclient.conf
+    dest: /opt/splunkforwarder/etc/system/local/deploymentclient.conf
+    mode: 0755
+    owner: root
+    group: root
+    backup: yes
+- name: start splunk
+  shell: bin/splunk start --accept-license --answer-yes --auto-ports --no-prompt -auth admin:"{{ OLDPASS }}"
+  args:
+    chdir: /opt/splunk-forwarder/
+- name: edit splunk user
+  shell: bin/splunk splunk edit user admin -password "{{ NEWPASS }}" -auth admin:"{{ OLDPASS }}"
+  args:
+    chdir: /opt/splunk-forwarder/
+- name: deploy poll
+  shell: bin/splunk set deploy-poll "{{ DEPLOYSERV }}":8089
+  args:
+    chdir: /opt/splunk-forwarder/
+- name: splunk boot start
+  shell: bin/splunk enable boot-start
+  args:
+    chdir: /opt/splunk-forwarder/
+- name: sleep for 2 mins
+  shell: sleep 2
+  args:
+    chdir: /opt/splunk-forwarder/
+- name: stop splunk
+  shell: bin/splunk stop
+  args:
+    chdir: /opt/splunk-forwarder/
+- name: enable splunk
+  command: systemctl enable splunkd
+- name: start splunk
+  command: systemctl start splunkd
+- name: splunk status
+  command: systemctl status splunkd
