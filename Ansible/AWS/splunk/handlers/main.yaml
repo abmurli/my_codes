@@ -1,0 +1,6 @@
+---
+- name: enable splunk
+  service: name=splunkd enabled=yes
+
+- name: start splunk
+  service: name=splunkd state=started

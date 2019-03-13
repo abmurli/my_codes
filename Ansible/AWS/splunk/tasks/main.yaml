@@ -45,9 +45,8 @@
   shell: bin/splunk stop
   args:
     chdir: /opt/splunk-forwarder/
-- name: enable splunk
-  command: systemctl enable splunkd
-- name: start splunk
-  command: systemctl start splunkd
+  notify:
+    - enable splunk
+    - start splunk
 - name: splunk status
   command: systemctl status splunkd
