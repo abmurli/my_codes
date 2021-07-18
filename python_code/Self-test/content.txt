@@ -1,0 +1,7 @@
+aab 8
+bbb 9
+cas 4
+abc 16
+cde 4
+dknos 5
+accabc 8

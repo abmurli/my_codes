@@ -1,0 +1,46 @@
+V = "coronavirus"
+N = 3
+p1 = "cooo"
+p2 = "crav"
+p3 = "aus"
+#
+# print(p1.index('o'))
+
+patient_list = {}
+
+patient_list['p1'] = p1
+patient_list['p2'] = p2
+patient_list['p3'] = p3
+
+positive_patients = []
+negative_patients = []
+index_list = []
+
+for key, value in patient_list.items():
+    for i in range(0, len(value)):
+        if value[i] in V:
+            if value.count(value[i]) == V.count(value[i]):
+                index_list.append(value.index(value[i]))
+    if len(index_list) < len(value):
+        negative_patients.append(key)
+    else:
+        positive_patients.append(key)
+
+print(negative_patients)
+print(positive_patients)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
