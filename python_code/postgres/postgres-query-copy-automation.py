@@ -13,8 +13,8 @@ conn_openstack = openstack.connect()
 
 # usage message
 def usage():
-  print "\npython " + sys.argv[0] + " -host [postgres hostname] -t [postgress_table name] -p [postgres_password] -st [start_time] -et [end_time] -c [container_name] -d [csv destination] -m [mail destination]"
-  print "---------\n example: python " + sys.argv[0] + " -h 10.0.0.0 -t sandbox.prod.fact -st 2018-10-01 10:00:00 -et 2018-10-01 11:00:00 -c use-case -d /tmp/murali.csv -m murali.ab@sap.com"
+  print ("\npython " + sys.argv[0] + " -host [postgres hostname] -t [postgress_table name] -p [postgres_password] -st [start_time] -et [end_time] -c [container_name] -d [csv destination] -m [mail destination]")
+  print ("---------\n example: python " + sys.argv[0] + " -h 10.0.0.0 -t sandbox.prod.fact -st 2018-10-01 10:00:00 -et 2018-10-01 11:00:00 -c use-case -d /tmp/murali.csv -m mail_id")
 
 # send mail
 def sendmail(message, mail_id):
@@ -154,7 +154,7 @@ def main():
       try:
         conn = psycopg2.connect(database="db_name", user="db_user", password=password, host=host_name, port="5432")
         cur = conn.cursor()
-        cur.execute("COPY (select organization,environment,apiproxy,request_uri,proxy,proxy_basepath,request_verb,request_size,response_status_code,is_error,client_received_start_timestamp,client_received_end_timestamp,target_sent_start_timestamp,target_sent_end_timestamp,target_received_start_timestamp,target_received_end_timestamp,client_sent_start_timestamp,client_sent_end_timestamp,developer_app,api_product,flow_resource,target,target_url,target_host,apiproxy_revision,proxy_pathsuffix,target_basepath,client_host,target_ip,request_path,response_size,virtual_host,gateway_flow_id,sla,message_count,total_response_time,request_processing_latency,response_processing_latency,target_response_time,cache_hit,x_forwarded_for_ip,useragent,target_response_code,groupid,target_error,policy_error,ax_ua_device_category,ax_ua_agent_type,ax_ua_agent_family,ax_ua_agent_version,ax_ua_os_family,ax_ua_os_version,ax_geo_city,ax_geo_country,ax_geo_continent,ax_geo_timezone,ax_session_id,ax_market_id,ax_partner_id,ax_channel_id,ax_business_unit_id,ax_traffic_referral_id,ax_device_id,ax_client_org_name,ax_client_app_name,ax_client_request_id,ax_created_time,ax_hour_of_day,ax_day_of_week,ax_week_of_month,ax_month_of_year,gateway_source,ax_cache_executed,ax_cache_name,ax_cache_key,ax_cache_source,ax_cache_l1_count,ax_edge_execution_fault_code,ax_edge_is_apigee_fault,ax_dn_region,ax_execution_fault_policy_name,ax_execution_fault_flow_name,ax_execution_fault_flow_state,ax_mp_host,ax_router_host,ax_geo_region,ax_true_client_ip,ax_isp from analytics.\""+ table_name  + "\" where client_received_start_timestamp >='" + start_time + "' and client_received_start_timestamp <'" + end_time + "' ) to '" + csv_path + "' delimiter '|' CSV HEADER")
+        cur.execute("COPY (<postgres query>) to '" + csv_path + "' delimiter '|' CSV HEADER")
 
         auth_token = get_auth_url()
         auth_url = str(auth_token) + "/" + container_name + "/" + obj_name
@@ -167,7 +167,7 @@ def main():
         sendmail(message, mail_id)
       except Exception as e:
         if("relative path not allowed for COPY to file" in str(e)):
-          print "please provide the absolute destination path. eg. /tmp/sandbox.csv"
+          print ("please provide the absolute destination path. eg. /tmp/sandbox.csv")
 
      # sendmail(message, mail_id)
     else:

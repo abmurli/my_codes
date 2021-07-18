@@ -14,8 +14,8 @@ def lambda_handler(event, context):
     # print('Received event: ' + json.dumps(event, indent=2))
 
     list_value_dict = {'Key': '', 'Value': ''}
-    list_value_string = json.dumps(list_value)
-	vol_ids = []
+    list_value_string = json.dumps(list_value_dict)
+    vol_ids = []
     ids = []
     tags_list = []
     try:
@@ -59,7 +59,7 @@ def lambda_handler(event, context):
             logger.info('base: ' + str(base))
 
             # loop through the instances
-            forvV instance in base:
+            for instance in base:
                 for vol in instance.volumes.all():
                     vol_ids.append(vol.id)
         if ids:
@@ -74,11 +74,11 @@ def lambda_handler(event, context):
                 for x in range(0, len(ec2instance.tags)):
                     key = ec2instance.tags[x]['Key']
                     Value = ec2instance.tags[x]['Value']
-                    tag = "{ \"Key\": \"" + Key + "\", \"Value\": \"" + Value + "\"}"
-                    tag_list.pop(x)
-                    tag_list.insert(x, json.loads(tag))
+                    tag = "{ \"Key\": \"" + key + "\", \"Value\": \"" + Value + "\"}"
+                    tags_list.pop(x)
+                    tags_list.insert(x, json.loads(tag))
 
-                    ec2client.create_tags(Resources=vol_ids, Tags=tag_list)
+                    ec2client.create_tags(Resources=vol_ids, Tags=tags_list)
             logger.info(' Remaining time (ms): ' + str(context.get_remaining_time_in_millis()) + '\n')
             return True
 

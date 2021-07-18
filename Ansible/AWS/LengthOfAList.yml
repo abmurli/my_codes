@@ -1,6 +1,5 @@
 - hosts: localhost
   connection: local
-
   vars:
    ec2:
     instance_ids:

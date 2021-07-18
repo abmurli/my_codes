@@ -10,7 +10,7 @@ variable "prefix" {
 
 variable "username" {
   description = "user name of the VM"
-  default     = "abmurli"
+  default     = ""
 }
 
 variable "password" {

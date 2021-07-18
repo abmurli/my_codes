@@ -11,9 +11,9 @@ credentials = assumedRoleObject['Credentials']
 
 s3_resource = boto3.resource(
     's3',
-    aws_access_key_id = credentials['AccessKeyId'],
-    aws_secret_access_key = credentials['SecretAccessKey'],
-    aws_session_token = credentials['SessionToken'],
+    aws_access_key_id=credentials['AccessKeyId'],
+    aws_secret_access_key=credentials['SecretAccessKey'],
+    aws_session_token=credentials['SessionToken'],
 )
 
 for bucket in s3_resource.buckets.all():

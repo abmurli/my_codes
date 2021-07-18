@@ -3,6 +3,7 @@ import argparse
 import time
 import logging
 
+from awscli.compat import raw_input
 
 '''
 Automate the scale up and scale down of the ASG instance count.
@@ -69,11 +70,12 @@ try:
 				Max_val = conn.describe_tags(Filters=asg_filter, MaxRecords=100)['Tags'][tag]['Value']
 		Value_List[ASG] = [Desired_val, Min_val, Max_val]
 except Exception:
-	print "Mandatory tags are not available"
+	print("Mandatory tags are not available")
+
 
 def listofasg():
     for autoscaling in ASG_List_to_Modify:
-        print autoscaling
+        print(autoscaling)
     return ""
 
 # Scale up function
@@ -84,7 +86,7 @@ def scaleupasg():
 		confirmscaleup = raw_input(listofasg() + '\nThese are the ASG groups to be scaled up\n'
 												 'Sure to Scale up? Press \'y\' to continue. Press \'n\' to abort: ')
 		if confirmscaleup == 'y':
-			print "scaling up..."
+			print( "scaling up...")
 			for key, value in Value_List.iteritems():
 				desired = int(value[0])
 				min = int(value[1])
@@ -96,7 +98,7 @@ def scaleupasg():
 		else:
 			exit()
 	else:
-		print "No ASG available"
+		print("No ASG available")
 
 # Scale down function
 
@@ -106,19 +108,21 @@ def scaledownasg():
 		confirmscaledown = raw_input(listofasg() + '\nThese are the ASG groups to be scaled down\n'
 									 'Sure to Scale down? Press \'y\' to continue. Press \'n\' to abort: ')
 		if confirmscaledown == 'y':
-			print "scaling down......"
+			print("scaling down......")
 			for ASG_Group_name in ASG_List_to_Modify:
 				logging.debug(current_time, conn.update_auto_scaling_group(
 					AutoScalingGroupName=ASG_Group_name,
 					MinSize=0, MaxSize=0, DesiredCapacity=0))
-			print "Scaling down is completed"
+			print ("Scaling down is completed")
 		else:
 			exit()
 	else:
-		print "No ASG available"
+		print("No ASG available")
 # Function call based on the user input --up
+
 if args.up:
     scaleupasg()
+
 # Function call based on the user input --down
 if args.down:
     scaledownasg()

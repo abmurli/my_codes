@@ -7,12 +7,11 @@ from datetime import datetime as datetime1
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
 def lambda_handler(event, context):
   ec2_client = boto3.client('ec2')
-
   current_time = datetime.datetime.now()
   time_now_epoc = datetime1.strptime(str(current_time)[:19], '%Y-%m-%d %H:%M:%S')
-
   for snap in ec2_client.describe_snapshots(OwnerIds=['self'])['Snapshots']:
 
     if not (str(snap['Description']).startswith("Created by CreateImage") or \

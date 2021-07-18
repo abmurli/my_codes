@@ -179,7 +179,7 @@ resource "azurerm_virtual_machine_extension" "vm-vmextensionlinux" {
 SETTINGS
 
   tags {
-  environment = "test"
-  created_by = "murali"
+  environment = ""
+  created_by = ""
   }
 }
